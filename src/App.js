@@ -34,7 +34,7 @@ class App extends Component {
             onPlayClick={this.handlePlayClick} 
             onAboutClick={this.toggleAbout} 
           />}
-        {this.state.displayed === 'board' && <Board />}
+        {this.state.displayed === 'board' && <Board boardLength={20} />}
         {this.state.displayAbout && <About onCloseClick={this.toggleAbout} />}
       </div>
     );
