@@ -27,6 +27,9 @@ class App extends Component {
   }
 
   render() {
+
+    const boardLength = 20;
+
     return (
       <div className="App">
         {this.state.displayed === 'welcome' && 
@@ -34,7 +37,7 @@ class App extends Component {
             onPlayClick={this.handlePlayClick} 
             onAboutClick={this.toggleAbout} 
           />}
-        {this.state.displayed === 'board' && <Board boardLength={20} />}
+        {this.state.displayed === 'board' && <Board boardLength={boardLength} />}
         {this.state.displayAbout && <About onCloseClick={this.toggleAbout} />}
       </div>
     );

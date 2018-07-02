@@ -10,8 +10,25 @@ class Board extends Component {
 
     changeCurrentField = (result) => {
         this.setState((state) => {
+            /*
+            - assign state.currentField to a variable
+            - rewrite 'if's as switch-case
+            */
+            state.currentField = state.currentField + result;
+            if (state.currentField === 20) {
+                console.log('you win! :)');
+            }
+            if (state.currentField === 12) {
+                console.log('you lose :(');
+            }
+            if (state.currentField > 20) {
+                state.currentField = 20 - (state.currentField - 20);
+            }
+            if (state.currentField === 19) {
+                state.currentField = 11;
+            }
             return {
-                currentField: state.currentField + result
+                currentField: state.currentField
             }
         });
     }

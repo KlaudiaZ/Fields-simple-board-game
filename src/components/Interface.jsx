@@ -6,6 +6,7 @@ const Interface = ({onThrow}) => {
     
     const handleThrowClick = (min, max) => {
         const result = Math.round(Math.random() * (max - min) + min);
+        console.log(result);
         onThrow(result);
         return result;
     }
