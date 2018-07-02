@@ -2,9 +2,11 @@ import React from 'react';
 
 const Dice = ({onThrowClick}) => {
 
+     
+    
     return (
         <div>
-            <button onClick={onThrowClick()}>{"Throw"}</button>
+            <button onClick={() => {onThrowClick(1, 6)}}>{"Throw"}</button>
             <div>
                 
             </div>

@@ -1,22 +1,20 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './styles/Interface.css';
 import Dice from './Dice';
 
-class Interface extends Component {
+const Interface = ({onThrow}) => {
     
-    handleThrowClick = () => {
-        const result = Math.random()
+    const handleThrowClick = (min, max) => {
+        const result = Math.round(Math.random() * (max - min) + min);
+        onThrow(result);
         return result;
     }
 
-    render () {
-
-        return (
-            <div className="interface">
-                <Dice onThrowClick={this.handleThrowClick} />
-            </div>
-        );
-    }
+    return (
+        <div className="interface">
+            <Dice onThrowClick={handleThrowClick} />
+        </div>
+    );
 }
 
 export default Interface;

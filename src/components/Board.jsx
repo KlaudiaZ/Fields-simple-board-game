@@ -7,6 +7,15 @@ class Board extends Component {
     state = {
         currentField: 1
     }
+
+    changeCurrentField = (result) => {
+        this.setState((state) => {
+            return {
+                currentField: state.currentField + result
+            }
+        });
+    }
+
     render () {
         let fields = [];
         for (let i = 1; i <= this.props.boardLength; i++) {
@@ -15,7 +24,7 @@ class Board extends Component {
 
         return (
             <Fragment>
-                <Interface />
+                <Interface onThrow={this.changeCurrentField} />
                 <div className="board">
                     {fields.map((field, index) => {
                         return <Field key={index + 1} selected={this.state.currentField === (index + 1) ? true : false}>{field}</Field>
