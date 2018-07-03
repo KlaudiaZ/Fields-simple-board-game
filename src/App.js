@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './App.css';
-import About from './components/About';
+import Alert from './components/Alert';
 import Board from './components/Board';
-import Welcome from './components/Welcome';
+import MainScreen from './components/MainScreen';
 
 class App extends Component {
   state = {
-    displayed: 'welcome', // welcome/board
+    displayBoard: false,
     displayAbout: false
   }
 
-  handlePlayClick = () => {
-    this.setState(() => {
+  toggleBoard = () => {
+    this.setState((state) => {
       return {
-        displayed: 'board'
+        displayBoard: !state.displayBoard
       }
     });
   }
@@ -31,15 +31,24 @@ class App extends Component {
     const boardLength = 20;
 
     return (
+      <Fragment>
+      {this.state.displayAbout && 
+        <Alert 
+          onCloseClick={this.toggleAbout} 
+          mode={"about"}
+          />}
       <div className="App">
-        {this.state.displayed === 'welcome' && 
-          <Welcome 
-            onPlayClick={this.handlePlayClick} 
+        {!this.state.displayBoard && 
+          <MainScreen 
+            onPlayClick={this.toggleBoard} 
             onAboutClick={this.toggleAbout} 
           />}
-        {this.state.displayed === 'board' && <Board boardLength={boardLength} />}
-        {this.state.displayAbout && <About onCloseClick={this.toggleAbout} />}
+        {this.state.displayBoard && 
+          <Board 
+            boardLength={boardLength} 
+            onGameOver={this.toggleBoard} />}  
       </div>
+      </Fragment>
     );
   }
 }

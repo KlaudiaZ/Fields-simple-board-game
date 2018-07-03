@@ -1,12 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import './styles/Board.css';
+import Alert from './Alert';
 import Field from './Field';
 import Interface from './Interface';
 
 class Board extends Component {
     state = {
         currentField: 1,
-        diceStatus: "Ready to throw!"
+        diceStatus: "Ready to throw!",
+        gameOver: ""
     }
 
     handleThrow = (min, max) => {
@@ -25,22 +27,30 @@ class Board extends Component {
 
             active = active + result;
 
-            switch (true) {     //add another case to create more special fields
-                case active > 20:
-                    active = 20 - (active - 20);
-                    break;
-                case active === 20:
-                    console.log('you win! :)');
-                    break;
-                case active === 19:
-                    active = 11;
-                    break;
-                case active === 12:
-                    console.log('you lose :(');
-                    break;                
+            if (active > this.props.boardLength) {
+                active = 2 * this.props.boardLength - active;
             }
-            return {
-                currentField: active
+
+            switch (active) {     //add another case to create more special fields
+                case 20:
+                    return {
+                        currentField: 20,
+                        gameOver: "won"
+                    }
+                case 19:
+                    return {
+                        currentField: 11
+                    }
+                case 12:
+                    return {
+                        currentField: 12,
+                        gameOver: "lost"
+                    }
+                default: {
+                    return {
+                        currentField: active
+                    }
+                }
             }
         });
     }
@@ -59,6 +69,16 @@ class Board extends Component {
                         return <Field key={index + 1} selected={this.state.currentField === (index + 1) ? true : false}>{field}</Field>
                     })}
                 </div>
+                {this.state.gameOver === "won" &&
+                    <Alert 
+                        mode={"gameWon"} 
+                        toggleBoard={this.props.onGameOver}
+                    />}
+                {this.state.gameOver === "lost" &&
+                    <Alert 
+                        mode={"gameLost"} 
+                        toggleBoard={this.props.onGameOver}
+                    />}
             </Fragment>
         );
     }
