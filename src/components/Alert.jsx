@@ -16,7 +16,8 @@ const Alert = ({mode, onCloseClick, toggleBoard, stats}) => {
                     {`Instructions:
                     Press "Play" to begin the game. Press "Throw" to roll the dice and move forward by the number you rolled.
                     You win the game upon getting to the last field. You lose when you step on the field number 12.
-                    Stepping on the field 19 will transport you to the field 11, be careful!
+                    Stepping on the field 19 will transport you to the field 11, be careful! 
+                    Exceeding field 20 will move you backwards by the surplus.
                     Enjoy!`}
                 </div>
             }
