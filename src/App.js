@@ -28,7 +28,7 @@ class App extends Component {
 
   render() {
 
-    const boardLength = 20;
+    const boardLength = 20;   // change board length here
 
     return (
       <Fragment>

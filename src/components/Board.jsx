@@ -8,14 +8,18 @@ class Board extends Component {
     state = {
         currentField: 1,
         diceStatus: "Ready to throw!",
-        gameOver: ""
+        gameOver: "",
+        sum: 0,
+        throwCount: 0
     }
 
     handleThrow = (min, max) => {
         const result = Math.round(Math.random() * (max - min) + min);
-        this.setState(() => {
+        this.setState((state) => {
             return {
-                diceStatus: result
+                diceStatus: result,
+                sum: state.sum + result,
+                throwCount: state.throwCount + 1
             }
         });
         this.changeCurrentField(result);
@@ -31,7 +35,7 @@ class Board extends Component {
                 active = 2 * this.props.boardLength - active;
             }
 
-            switch (active) {     //add another case to create more special fields
+            switch (active) {     // add another case to create more special fields
                 case 20:
                     return {
                         currentField: 20,
@@ -61,6 +65,11 @@ class Board extends Component {
             fields.push(i);
         }
 
+        const stats = {
+            sum: this.state.sum,
+            throwCount: this.state.throwCount
+        }
+
         return (
             <Fragment>
                 <Interface onThrow={this.handleThrow} diceStatus={this.state.diceStatus} />
@@ -69,15 +78,11 @@ class Board extends Component {
                         return <Field key={index + 1} selected={this.state.currentField === (index + 1) ? true : false}>{field}</Field>
                     })}
                 </div>
-                {this.state.gameOver === "won" &&
+                {this.state.gameOver !== "" &&
                     <Alert 
-                        mode={"gameWon"} 
+                        mode={this.state.gameOver === "won" ? "gameWon": "gameLost"}  
                         toggleBoard={this.props.onGameOver}
-                    />}
-                {this.state.gameOver === "lost" &&
-                    <Alert 
-                        mode={"gameLost"} 
-                        toggleBoard={this.props.onGameOver}
+                        stats={stats}
                     />}
             </Fragment>
         );

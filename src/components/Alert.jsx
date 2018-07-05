@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './styles/Alert.css';
 
-const Alert = ({mode, onCloseClick, toggleBoard}) => {
+const Alert = ({mode, onCloseClick, toggleBoard, stats}) => {
     return (
         <div className="alertBackground">
         <div className="alert">
             {mode === 'about' && 
                 <div>
+                    {"Fields"}
+                    <br />
+                    <br />
                     {"Author: Klaudia Zając"}
                     <br />
                     <br />
@@ -15,15 +18,29 @@ const Alert = ({mode, onCloseClick, toggleBoard}) => {
                     You win the game upon getting to the last field. You lose when you step on the field number 12.
                     Stepping on the field 19 will transport you to the field 11, be careful!
                     Enjoy!`}
-                </div>}
+                </div>
+            }
             {mode === 'gameWon' &&
                 <div>
                     {"Congratulations! You Win! :)"}
-                </div>}
+                </div>
+            }
             {mode === 'gameLost' &&
                 <div>
-                    {"Sorry! You lose... :("}
-                </div>}
+                    {"Sorry! You lose... :("} 
+                </div>
+            }
+            {mode !== "about" &&
+                <Fragment>
+                    <br />
+                    {"Throws: " + stats.throwCount}
+                    <br />
+                    <br />
+                    {"Average throw result: " + Math.round(stats.sum / stats.throwCount)}
+                    <br />
+                </Fragment>
+            }
+            <br />
             <button className="navigation" onClick={() => {
                 if (mode === 'about') {
                     onCloseClick();
